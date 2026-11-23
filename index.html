@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UniTrade | Campus Marketplace for Students</title>
+  <meta name="description" content="Buy and sell second-hand textbooks, calculators, electronics, notes and dorm essentials within your college campus.">
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <aside class="top-banner" aria-label="Campus announcement">
+    <div class="container top-banner-content">
+      <span class="badge-pill">🎓 Campus Verified</span>
+      <span>Finals Week Special: Trade & save up to 75% on second-hand textbooks and study notes!</span>
+      <a href="#how-it-works" class="top-banner-link">How it works &rarr;</a>
+    </div>
+  </aside>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-container">
+      <!-- Logo -->
+      <a href="#" class="brand-logo" id="logo-btn" aria-label="UniTrade Home">
+        <div class="logo-icon-wrapper">
+          <svg class="logo-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Uni<span class="gradient-text">Trade</span></span>
+          <span class="brand-sub">Campus Marketplace</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Search -->
+      <div class="nav-search-bar" role="search">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input 
+          type="text" 
+          id="nav-search-input" 
+          placeholder="Search books, calculators, electronics..." 
+          aria-label="Search campus products"
+          autocomplete="off"
+        >
+        <button type="button" class="search-clear-btn" id="nav-search-clear" aria-label="Clear search" style="display: none;">
+          &times;
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="nav-menu" id="nav-menu" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <button type="button" class="nav-link active" id="nav-explore-btn">
+              <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              <span>Explore</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="nav-link" id="nav-my-listings-btn">
+              <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span>Dashboard</span>
+              <span class="my-listings-badge" id="my-listings-counter">0</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="nav-link" id="nav-saved-btn">
+              <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span>Saved</span>
+              <span class="saved-badge" id="saved-counter">0</span>
+            </button>
+          </li>
+        </ul>
+
+        <!-- Add Product CTA Button -->
+        <button type="button" class="btn btn-primary nav-post-btn" id="open-add-product-btn">
+          <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Sell an Item</span>
+        </button>
+
+        <!-- Auth Controls: Logged Out State -->
+        <div class="nav-auth-group" id="nav-auth-logged-out">
+          <button type="button" class="btn btn-secondary nav-auth-btn" id="nav-login-btn">
+            Log In
+          </button>
+          <button type="button" class="btn btn-outline-primary nav-auth-btn" id="nav-signup-btn">
+            Sign Up
+          </button>
+        </div>
+
+        <!-- Auth Controls: Logged In State -->
+        <div class="nav-auth-group" id="nav-auth-logged-in" style="display: none;">
+          <button type="button" class="user-profile-pill" id="nav-user-profile-btn" title="View Student Dashboard">
+            <span class="user-pill-avatar" id="nav-user-avatar">AM</span>
+            <span class="user-pill-name" id="nav-user-name">Alex Morgan</span>
+          </button>
+          <button type="button" class="btn btn-danger-soft nav-logout-btn" id="nav-logout-btn" title="Sign out of student account">
+            <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            <span>Logout</span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Mobile Hamburger Button -->
+      <button type="button" class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Search Bar (Collapsible/Visible on mobile) -->
+    <div class="mobile-search-bar" id="mobile-search-bar">
+      <div class="container">
+        <div class="mobile-search-inner">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="text" 
+            id="mobile-search-input" 
+            placeholder="Search textbooks, tech, dorm essentials..." 
+            aria-label="Search products"
+          >
+          <button type="button" class="search-clear-btn" id="mobile-search-clear" style="display: none;">&times;</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="hero-section">
+    <div class="hero-backdrop"></div>
+    <div class="container hero-content">
+      <div class="hero-text-col">
+        <div class="hero-tag">
+          <span class="pulse-dot"></span>
+          <span>Your Campus Student Exchange Hub</span>
+        </div>
+        <h1 class="hero-title">
+          Buy & Sell Student Essentials <br>
+          <span class="gradient-text">Right on Your Campus.</span>
+        </h1>
+        <p class="hero-subtitle">
+          Skip expensive bookstore markups and sketchy shipping. Trade textbooks, graphing calculators, lab gear, and tech with fellow classmates face-to-face.
+        </p>
+
+        <!-- Hero Search and Quick Filter Form -->
+        <div class="hero-search-card">
+          <div class="hero-search-field">
+            <svg class="hero-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input 
+              type="text" 
+              id="hero-search-input" 
+              placeholder="What do you need? (e.g. Calculus, TI-84, iPad...)"
+              aria-label="Search products from hero"
+            >
+          </div>
+          <div class="hero-category-select">
+            <svg class="hero-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 6h16M4 12h16M4 18h7"></path>
+            </svg>
+            <select id="hero-category-dropdown" aria-label="Select Category">
+              <option value="All">All Categories</option>
+              <option value="Textbooks">Textbooks</option>
+              <option value="Calculators">Calculators</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Notes & Study">Notes & Study</option>
+              <option value="Dorm Essentials">Dorm Essentials</option>
+              <option value="Other">Other Gear</option>
+            </select>
+          </div>
+          <button type="button" class="btn btn-primary hero-find-btn" id="hero-search-btn">
+            Find Deals
+          </button>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="hero-stats-row">
+          <div class="hero-stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Student-to-Student</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat-item">
+            <span class="stat-number">₹0</span>
+            <span class="stat-label">Platform Fees</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat-item">
+            <span class="stat-number">Same-Day</span>
+            <span class="stat-label">Campus Handover</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Student Dashboard & My Products View -->
+  <section class="dashboard-section" id="my-listings-view" style="display: none;">
+    <div class="container">
+      <div class="dashboard-top-nav">
+        <button type="button" class="back-link-btn" id="dashboard-back-btn">
+          &larr; Back to Explore Deals
+        </button>
+      </div>
+
+      <!-- Student Profile Hero Card -->
+      <div class="student-profile-banner">
+        <div class="student-profile-main">
+          <div class="student-avatar-large" id="dash-student-avatar">AM</div>
+          <div class="student-profile-details">
+            <div class="student-name-row">
+              <h2 class="student-profile-name">Welcome back, <span id="dash-student-name">Alex Morgan</span>!</h2>
+              <span class="badge-pill">🎓 Verified Student</span>
+            </div>
+            <div class="student-meta-list">
+              <span class="student-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="meta-icon">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span id="dash-student-email">alex.m@campus.edu</span>
+              </span>
+              <span class="student-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="meta-icon">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                </svg>
+                <span id="dash-student-dept">Mathematics, 3rd Year</span>
+              </span>
+              <span class="student-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="meta-icon">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span id="dash-student-location">Science Block & North Hostel</span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="student-profile-actions">
+          <button type="button" class="btn btn-primary" id="dashboard-add-product-btn">
+            <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Post New Item</span>
+          </button>
+          <button type="button" class="btn btn-secondary" id="dash-logout-btn">
+            Logout
+          </button>
+        </div>
+      </div>
+
+      <!-- Security Prototype Disclaimer Banner -->
+      <div class="prototype-security-banner">
+        <div class="security-banner-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <div class="security-banner-text">
+          <strong>Student Prototype Authentication Notice:</strong>
+          <span>This campus exchange prototype stores user profiles and salted SHA-256 password hashes client-side in LocalStorage for educational demonstration. In a production marketplace, authentication requires a secure server backend, HTTPS, HttpOnly session cookies, and database-level password hashing (bcrypt/Argon2).</span>
+        </div>
+      </div>
+
+      <!-- Metrics Cards -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-icon-wrap metric-purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Active Listings</span>
+            <span class="metric-value" id="metric-active-count">0</span>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon-wrap metric-blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Total Inventory Value</span>
+            <span class="metric-value" id="metric-total-value">₹0</span>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon-wrap metric-green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Campus Inquiries Ready</span>
+            <span class="metric-value">Direct Meetup</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard View Navigation Tabs -->
+      <div class="dashboard-tabs-bar">
+        <button type="button" class="dash-tab-btn active" id="dash-tab-products-btn">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+          <span>My Products</span>
+          <span class="dash-tab-badge" id="dashboard-items-badge">0 items</span>
+        </button>
+        <button type="button" class="dash-tab-btn" id="dash-tab-profile-btn">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span>Student Profile</span>
+        </button>
+      </div>
+
+      <!-- Tab 1 Pane: My Products -->
+      <div class="dash-tab-pane active" id="dash-pane-products">
+        <div class="product-grid" id="my-listings-grid">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- Tab 2 Pane: Student Profile -->
+      <div class="dash-tab-pane" id="dash-pane-profile" style="display: none;">
+        <div class="profile-card">
+          <div class="profile-card-header">
+            <div>
+              <h3 class="profile-card-title">Manage Student Profile</h3>
+              <p class="profile-card-sub">Update your campus contact information to help classmates reach you quickly.</p>
+            </div>
+          </div>
+          <form id="profile-edit-form" novalidate>
+            <div class="profile-form-body">
+              <div class="form-row">
+                <div class="form-group col-half">
+                  <label for="profile-name-input" class="form-label">Full Name <span class="required">*</span></label>
+                  <input type="text" id="profile-name-input" class="form-control" required>
+                </div>
+                <div class="form-group col-half">
+                  <label for="profile-email-input" class="form-label">College Email (Read Only)</label>
+                  <input type="email" id="profile-email-input" class="form-control input-readonly" readonly>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-half">
+                  <label for="profile-dept-input" class="form-label">Degree / Department & Year</label>
+                  <input type="text" id="profile-dept-input" class="form-control" placeholder="e.g. B.Tech Computer Science, 3rd Year">
+                </div>
+                <div class="form-group col-half">
+                  <label for="profile-contact-input" class="form-label">Contact (Phone / WhatsApp) <span class="required">*</span></label>
+                  <input type="text" id="profile-contact-input" class="form-control" placeholder="e.g. +91 98765 43210" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="profile-location-input" class="form-label">Default Campus Meetup Location</label>
+                <input type="text" id="profile-location-input" class="form-control" placeholder="e.g. Science Library 2nd Floor / Hall 4">
+              </div>
+            </div>
+            <div class="profile-form-footer">
+              <button type="submit" class="btn btn-primary" id="save-profile-btn">
+                Save Profile Changes
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Saved Items View (Hidden by default, shown when Saved is clicked) -->
+  <section class="dashboard-section" id="saved-view" style="display: none;">
+    <div class="container">
+      <div class="dashboard-header">
+        <div>
+          <button type="button" class="back-link-btn" id="saved-back-btn">
+            &larr; Back to All Products
+          </button>
+          <h2 class="section-title">Saved Bookmarks</h2>
+          <p class="section-subtitle">Items you have bookmarked for quick reference and purchase.</p>
+        </div>
+      </div>
+      <div class="product-grid" id="saved-listings-grid">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Marketplace Main Browse Section -->
+  <main class="main-content" id="marketplace-section">
+    <div class="container">
+      <!-- Category Filter Pills -->
+      <div class="category-filter-bar" role="region" aria-label="Category filters">
+        <div class="filter-scroll-container">
+          <button type="button" class="filter-pill active" data-category="All">
+            <span class="filter-icon">✨</span>
+            <span>All Items</span>
+          </button>
+          <button type="button" class="filter-pill" data-category="Textbooks">
+            <span class="filter-icon">📚</span>
+            <span>Textbooks</span>
+          </button>
+          <button type="button" class="filter-pill" data-category="Calculators">
+            <span class="filter-icon">🔢</span>
+            <span>Calculators</span>
+          </button>
+          <button type="button" class="filter-pill" data-category="Electronics">
+            <span class="filter-icon">⚡</span>
+            <span>Electronics</span>
+          </button>
+          <button type="button" class="filter-pill" data-category="Notes & Study">
+            <span class="filter-icon">📝</span>
+            <span>Notes & Study</span>
+          </button>
+          <button type="button" class="filter-pill" data-category="Dorm Essentials">
+            <span class="filter-icon">🛏️</span>
+            <span>Dorm Essentials</span>
+          </button>
+          <button type="button" class="filter-pill" data-category="Other">
+            <span class="filter-icon">🎒</span>
+            <span>Other Gear</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Controls & Summary Row -->
+      <div class="marketplace-controls-bar">
+        <div class="results-summary">
+          <h2 class="results-heading" id="results-heading">Explore Campus Deals</h2>
+          <span class="results-count" id="results-count">Showing all products</span>
+        </div>
+
+        <div class="controls-actions">
+          <!-- Active filter tag indicator if any -->
+          <div class="active-filter-indicator" id="active-filter-badge" style="display: none;">
+            <span id="active-filter-text">Filter: Textbooks</span>
+            <button type="button" id="clear-active-filter-btn" aria-label="Clear category filter">&times;</button>
+          </div>
+
+          <!-- Sort dropdown -->
+          <div class="sort-wrapper">
+            <label for="sort-dropdown" class="sort-label">Sort By:</label>
+            <div class="select-styled">
+              <select id="sort-dropdown" aria-label="Sort products">
+                <option value="newest">Newest First</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="title-az">Name: A to Z</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Banner Notification (shown when searching) -->
+      <div class="search-feedback-banner" id="search-feedback-banner" style="display: none;">
+        <span>Search results for "<strong id="search-query-text"></strong>"</span>
+        <button type="button" class="btn-text-link" id="clear-search-link">Reset Search</button>
+      </div>
+
+      <!-- Product Listing Grid -->
+      <div class="product-grid" id="product-grid" aria-live="polite">
+        <!-- Products will be dynamically populated here -->
+      </div>
+
+      <!-- Empty State View -->
+      <div class="empty-state" id="empty-state" style="display: none;">
+        <div class="empty-state-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </div>
+        <h3 class="empty-state-title">No products found</h3>
+        <p class="empty-state-desc" id="empty-state-desc">
+          We couldn't find any items matching your selected criteria. Try adjusting your search keywords or category filters.
+        </p>
+        <div class="empty-state-actions">
+          <button type="button" class="btn btn-secondary" id="empty-reset-btn">Reset All Filters</button>
+          <button type="button" class="btn btn-primary" id="empty-post-btn">+ List New Item</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- How It Works Section -->
+  <section class="how-it-works-section" id="how-it-works">
+    <div class="container">
+      <div class="section-center-header">
+        <span class="badge-pill">Safe & Simple</span>
+        <h2 class="section-title">How Campus Trading Works</h2>
+        <p class="section-subtitle">Designed exclusively for college students. Simple, safe, and transparent.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+          </div>
+          <h3 class="step-title">List in 60 Seconds</h3>
+          <p class="step-desc">Upload a photo, set your price, pick your dorm or campus quad, and publish instantly.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </div>
+          <h3 class="step-title">Connect With Classmates</h3>
+          <p class="step-desc">Interested buyers message you directly with campus location details. No awkward strangers.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+              <path d="M7 15h0M2 9.5h20"></path>
+            </svg>
+          </div>
+          <h3 class="step-title">Meet & Settle Up</h3>
+          <p class="step-desc">Meet at the library, student center or dining hall. Inspect the item and settle via UPI (GPay/PhonePe) or cash.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Add / Edit Product Modal -->
+  <div class="modal-backdrop" id="product-modal" role="dialog" aria-modal="true" aria-labelledby="modal-form-title" style="display: none;">
+    <div class="modal-dialog modal-dialog-lg">
+      <form id="product-form" class="modal-content" novalidate>
+        <input type="hidden" id="form-edit-id" value="">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <div>
+            <h3 class="modal-title" id="modal-form-title">List an Item for Sale</h3>
+            <p class="modal-subtitle" id="modal-form-subtitle">Fill in the details below to list your item on the campus marketplace.</p>
+          </div>
+          <button type="button" class="modal-close-btn" id="close-form-modal-btn" aria-label="Close modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+            <!-- Row: Title -->
+            <div class="form-group">
+              <label for="form-title" class="form-label">
+                Product Title <span class="required">*</span>
+              </label>
+              <input 
+                type="text" 
+                id="form-title" 
+                name="title" 
+                class="form-control" 
+                placeholder="e.g. Stewart Calculus: Early Transcendentals (9th Edition)" 
+                maxlength="90" 
+                required
+              >
+              <div class="field-error" id="error-title">Please enter a valid title (at least 4 characters).</div>
+            </div>
+
+            <!-- Row: Category & Price -->
+            <div class="form-row">
+              <div class="form-group col-half">
+                <label for="form-category" class="form-label">
+                  Category <span class="required">*</span>
+                </label>
+                <select id="form-category" name="category" class="form-control" required>
+                  <option value="" disabled selected>Select category...</option>
+                  <option value="Textbooks">📚 Textbooks</option>
+                  <option value="Calculators">🔢 Calculators</option>
+                  <option value="Electronics">⚡ Electronics</option>
+                  <option value="Notes & Study">📝 Notes & Study</option>
+                  <option value="Dorm Essentials">🛏️ Dorm Essentials</option>
+                  <option value="Other">🎒 Other Gear</option>
+                </select>
+                <div class="field-error" id="error-category">Please select a category.</div>
+              </div>
+
+              <div class="form-group col-half">
+                <label for="form-price" class="form-label">
+                  Price (₹ INR) <span class="required">*</span>
+                </label>
+                <div class="input-with-prefix">
+                  <span class="input-prefix">₹</span>
+                  <input 
+                    type="number" 
+                    id="form-price" 
+                    name="price" 
+                    class="form-control input-has-prefix" 
+                    placeholder="450" 
+                    step="1" 
+                    min="0" 
+                    max="999999" 
+                    required
+                  >
+                </div>
+                <div class="field-error" id="error-price">Please enter a valid price (₹0 or greater).</div>
+              </div>
+            </div>
+
+            <!-- Row: Condition & Campus Meetup Location -->
+            <div class="form-row">
+              <div class="form-group col-half">
+                <label for="form-condition" class="form-label">
+                  Condition <span class="required">*</span>
+                </label>
+                <select id="form-condition" name="condition" class="form-control" required>
+                  <option value="Like New" selected>Like New (No noticeable flaws)</option>
+                  <option value="Brand New">Brand New (Unopened / Never used)</option>
+                  <option value="Good">Good (Minor wear, fully functional)</option>
+                  <option value="Fair">Fair (Noticeable wear, works fine)</option>
+                </select>
+              </div>
+
+              <div class="form-group col-half">
+                <label for="form-location" class="form-label">
+                  Campus Pickup Spot <span class="required">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="form-location" 
+                  name="location" 
+                  class="form-control" 
+                  placeholder="e.g. Main Library 1st Floor / West Quad" 
+                  required
+                >
+                <div class="field-error" id="error-location">Please specify a meetup spot.</div>
+              </div>
+            </div>
+
+            <!-- Row: Seller Info -->
+            <div class="form-row">
+              <div class="form-group col-half">
+                <label for="form-seller-name" class="form-label">
+                  Your Name / Class <span class="required">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="form-seller-name" 
+                  name="sellerName" 
+                  class="form-control" 
+                  placeholder="e.g. Jordan K. (Sophomore, Bio)" 
+                  required
+                >
+                <div class="field-error" id="error-seller-name">Please enter your name.</div>
+              </div>
+
+              <div class="form-group col-half">
+                <label for="form-seller-contact" class="form-label">
+                  Contact (Email or Phone/WhatsApp) <span class="required">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="form-seller-contact" 
+                  name="sellerContact" 
+                  class="form-control" 
+                  placeholder="e.g. jordan.k@college.edu or 555-0199" 
+                  required
+                >
+                <div class="field-error" id="error-seller-contact">Please provide contact info so buyers can reach you.</div>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+              <label for="form-description" class="form-label">
+                Description <span class="required">*</span>
+              </label>
+              <textarea 
+                id="form-description" 
+                name="description" 
+                class="form-control" 
+                rows="3" 
+                placeholder="Mention details like edition, condition details, inclusions (e.g. charging cable, clean pages, solution manual)..." 
+                required
+              ></textarea>
+              <div class="field-error" id="error-description">Please enter at least 15 characters describing the item.</div>
+            </div>
+
+            <!-- Image Options: URL or Upload or Preset -->
+            <div class="form-group">
+              <label class="form-label">Product Image <span class="required">*</span></label>
+              
+              <!-- Tab switch for image input -->
+              <div class="image-input-tabs">
+                <button type="button" class="img-tab-btn active" data-img-tab="url">Image URL</button>
+                <button type="button" class="img-tab-btn" data-img-tab="upload">Upload File</button>
+                <button type="button" class="img-tab-btn" data-img-tab="presets">Preset Photos</button>
+              </div>
+
+              <!-- URL Tab Pane -->
+              <div class="img-tab-content active" id="img-pane-url">
+                <input 
+                  type="url" 
+                  id="form-image-url" 
+                  class="form-control" 
+                  placeholder="https://images.unsplash.com/... (paste image link)"
+                >
+                <span class="field-hint">Paste any image address or choose a preset below.</span>
+              </div>
+
+              <!-- Upload Tab Pane -->
+              <div class="img-tab-content" id="img-pane-upload">
+                <div class="file-drop-area" id="file-drop-area">
+                  <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                  <p class="file-drop-text">Click or drag & drop image here</p>
+                  <span class="file-drop-hint">PNG, JPG or WebP up to 4MB</span>
+                  <input type="file" id="form-image-file" accept="image/*" class="file-hidden-input">
+                </div>
+              </div>
+
+              <!-- Presets Tab Pane -->
+              <div class="img-tab-content" id="img-pane-presets">
+                <div class="preset-images-grid">
+                  <button type="button" class="preset-thumb-btn" data-url="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80">
+                    <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=200&q=80" alt="Textbooks">
+                    <span>Textbooks</span>
+                  </button>
+                  <button type="button" class="preset-thumb-btn" data-url="https://images.unsplash.com/photo-1587145820266-a5951ee6f620?auto=format&fit=crop&w=800&q=80">
+                    <img src="https://images.unsplash.com/photo-1587145820266-a5951ee6f620?auto=format&fit=crop&w=200&q=80" alt="Calculator">
+                    <span>Calculator</span>
+                  </button>
+                  <button type="button" class="preset-thumb-btn" data-url="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=800&q=80">
+                    <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=200&q=80" alt="Tablet & Stylus">
+                    <span>iPad / Tablet</span>
+                  </button>
+                  <button type="button" class="preset-thumb-btn" data-url="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&w=800&q=80">
+                    <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&w=200&q=80" alt="Study Notes">
+                    <span>Study Notes</span>
+                  </button>
+                  <button type="button" class="preset-thumb-btn" data-url="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=200&q=80" alt="Headphones">
+                    <span>Electronics</span>
+                  </button>
+                  <button type="button" class="preset-thumb-btn" data-url="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80">
+                    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=200&q=80" alt="Dorm Chair">
+                    <span>Dorm Gear</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Live Image Preview Box -->
+              <div class="image-preview-wrapper" id="image-preview-wrapper">
+                <img id="form-img-preview" src="" alt="Preview">
+                <div class="preview-actions">
+                  <span class="preview-tag">Image Preview</span>
+                  <button type="button" class="btn-preview-remove" id="btn-remove-preview" title="Remove image">&times;</button>
+                </div>
+              </div>
+              <div class="field-error" id="error-image">Please provide a valid image for your listing.</div>
+            </div>
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="cancel-form-btn">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="submit-form-btn">
+              <span id="submit-btn-text">Publish Listing</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  <!-- Product Details Modal -->
+  <div class="modal-backdrop" id="details-modal" role="dialog" aria-modal="true" aria-labelledby="details-title" style="display: none;">
+    <div class="modal-dialog modal-dialog-lg">
+      <div class="modal-content">
+        <!-- Close Button -->
+        <button type="button" class="modal-close-floating" id="close-details-btn" aria-label="Close modal">&times;</button>
+
+        <div class="details-body">
+          <!-- Left: Image Gallery & Badges -->
+          <div class="details-image-col">
+            <div class="details-image-container">
+              <img id="details-image" src="" alt="Product Photo">
+              <div class="details-badges-overlay">
+                <span class="category-badge" id="details-category-badge">Category</span>
+                <span class="condition-badge" id="details-condition-badge">Condition</span>
+              </div>
+            </div>
+            
+            <!-- Dorm / Safety Tip Card -->
+            <div class="details-safety-tip">
+              <div class="tip-icon">🛡️</div>
+              <div class="tip-content">
+                <strong>Campus Safety Tip</strong>
+                <p>Always meet in public campus zones like the library foyer or student union during daylight hours.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Details Info -->
+          <div class="details-info-col">
+            <!-- Owner Indicator -->
+            <div class="details-owner-banner" id="details-owner-badge" style="display: none;">
+              <span>⭐ This is your listing</span>
+            </div>
+
+            <!-- Category & Date -->
+            <div class="details-meta-row">
+              <span class="details-category-text" id="details-category-text">Textbooks</span>
+              <span class="meta-dot">&bull;</span>
+              <span class="details-date-text" id="details-date-text">Posted today</span>
+            </div>
+
+            <!-- Title -->
+            <h2 class="details-title" id="details-title">Product Title</h2>
+
+            <!-- Price -->
+            <div class="details-price-row">
+              <span class="details-price" id="details-price">₹0</span>
+              <span class="details-price-tag">Fair Student Price</span>
+            </div>
+
+            <hr class="details-divider">
+
+            <!-- Specs Grid -->
+            <div class="details-specs-grid">
+              <div class="spec-item">
+                <span class="spec-label">Condition</span>
+                <span class="spec-value" id="details-condition-text">Like New</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Pickup Location</span>
+                <span class="spec-value" id="details-location-text">Library 2nd Floor</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Status</span>
+                <span class="spec-value status-available">Available</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Payment</span>
+                <span class="spec-value">Cash / UPI / GPay / Paytm</span>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="details-description-wrap">
+              <h4 class="details-section-label">Description & Details</h4>
+              <p class="details-description" id="details-description">Full product description...</p>
+            </div>
+
+            <hr class="details-divider">
+
+            <!-- Seller Profile Card -->
+            <div class="seller-card">
+              <div class="seller-avatar" id="details-seller-avatar">JS</div>
+              <div class="seller-info">
+                <div class="seller-name-row">
+                  <span class="seller-name" id="details-seller-name">Jordan S.</span>
+                  <span class="verified-student-badge">✓ Verified Student</span>
+                </div>
+                <span class="seller-sub" id="details-seller-sub">Campus Member</span>
+              </div>
+            </div>
+
+            <!-- Action Buttons for Buyer or Owner -->
+            <div class="details-actions">
+              <!-- Buyer Action: Contact Seller -->
+              <button type="button" class="btn btn-primary btn-block btn-lg" id="details-contact-btn">
+                <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
+                <span>Contact Seller</span>
+              </button>
+
+              <!-- Secondary Row -->
+              <div class="details-secondary-actions">
+                <button type="button" class="btn btn-secondary flex-grow" id="details-bookmark-btn">
+                  <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                  <span id="details-bookmark-text">Save Item</span>
+                </button>
+                <button type="button" class="btn btn-secondary flex-grow" id="details-share-btn">
+                  <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                  </svg>
+                  <span>Share</span>
+                </button>
+              </div>
+
+              <!-- Owner Specific Edit & Delete Row -->
+              <div class="details-owner-actions" id="details-owner-actions" style="display: none;">
+                <button type="button" class="btn btn-outline-primary flex-grow" id="details-edit-btn">
+                  <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                  </svg>
+                  <span>Edit Listing</span>
+                </button>
+                <button type="button" class="btn btn-danger-soft flex-grow" id="details-delete-btn">
+                  <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                  </svg>
+                  <span>Delete Listing</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Seller Modal -->
+  <div class="modal-backdrop" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title" style="display: none;">
+    <div class="modal-dialog modal-dialog-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h3 class="modal-title" id="contact-modal-title">Contact Seller</h3>
+            <p class="modal-subtitle">Connect with this seller to arrange meetup & payment.</p>
+          </div>
+          <button type="button" class="modal-close-btn" id="close-contact-modal-btn" aria-label="Close modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="contact-target-preview">
+            <span class="contact-item-name" id="contact-product-name">Product Name</span>
+            <span class="contact-item-price" id="contact-product-price">₹0</span>
+          </div>
+
+          <div class="contact-methods-list">
+            <div class="contact-method-card">
+              <div class="contact-icon-bubble">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </div>
+              <div class="contact-details-text">
+                <span class="contact-type-label">Seller Contact Info</span>
+                <span class="contact-value-text" id="contact-value-display">seller@college.edu</span>
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-copy-contact">
+                Copy
+              </button>
+            </div>
+          </div>
+
+          <div class="contact-quick-template">
+            <span class="template-label">Suggested Message:</span>
+            <div class="template-box" id="template-message-text">
+              "Hi! I saw your listing for [Item] on UniTrade. Is it still available? I can meet up at the library or dorm quad!"
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm btn-block mt-2" id="btn-copy-template">
+              Copy Message Template
+            </button>
+          </div>
+
+          <div class="contact-direct-actions mt-3">
+            <a href="#" class="btn btn-primary btn-block" id="contact-direct-link" target="_blank" rel="noopener">
+              Open Email / Messenger
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal-backdrop" id="delete-modal" role="dialog" aria-modal="true" aria-labelledby="delete-dialog-title" style="display: none;">
+    <div class="modal-dialog modal-dialog-sm">
+      <div class="modal-content text-center">
+        <div class="delete-warning-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <h3 class="modal-title" id="delete-dialog-title">Delete Product Listing?</h3>
+        <p class="modal-subtitle">
+          Are you sure you want to remove <strong id="delete-product-title">this product</strong>? This listing will be permanently removed from the marketplace.
+        </p>
+        <div class="modal-actions-dual mt-4">
+          <button type="button" class="btn btn-secondary flex-grow" id="cancel-delete-btn">Cancel</button>
+          <button type="button" class="btn btn-danger flex-grow" id="confirm-delete-btn">Yes, Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Student Login Modal -->
+  <div class="modal-backdrop" id="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-dialog-title" style="display: none;">
+    <div class="modal-dialog modal-dialog-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h3 class="modal-title" id="login-dialog-title">Student Login</h3>
+            <p class="modal-subtitle">Sign in to list products, manage listings & connect.</p>
+          </div>
+          <button type="button" class="modal-close-btn" id="close-login-modal-btn" aria-label="Close modal">&times;</button>
+        </div>
+
+        <form id="login-form" novalidate>
+          <div class="modal-body">
+            <!-- Demo Login Shortcut Pill -->
+            <button type="button" class="demo-login-shortcut-btn" id="demo-login-btn">
+              <span class="demo-pill-tag">⚡ Quick Demo</span>
+              <span>1-Click Login as Alex Morgan (Demo Student)</span>
+            </button>
+
+            <!-- Error alert box -->
+            <div class="auth-alert-box error" id="login-error-alert" style="display: none;"></div>
+
+            <div class="form-group">
+              <label for="login-email" class="form-label">College Email <span class="required">*</span></label>
+              <input 
+                type="email" 
+                id="login-email" 
+                class="form-control" 
+                placeholder="e.g. alex.m@campus.edu" 
+                autocomplete="email"
+                required
+              >
+              <div class="field-error" id="error-login-email">Please enter a valid email address.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="login-password" class="form-label">Password <span class="required">*</span></label>
+              <div class="password-input-wrap">
+                <input 
+                  type="password" 
+                  id="login-password" 
+                  class="form-control input-has-toggle" 
+                  placeholder="Enter your password" 
+                  autocomplete="current-password"
+                  required
+                >
+                <button type="button" class="btn-password-toggle" id="toggle-login-password" aria-label="Toggle password visibility">
+                  👁️
+                </button>
+              </div>
+              <div class="field-error" id="error-login-password">Please enter your password.</div>
+            </div>
+
+            <!-- Learning Prototype Security Disclaimer -->
+            <div class="auth-prototype-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="auth-note-icon">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span>Learning prototype note: Passwords are hashed with salted SHA-256 before client storage.</span>
+            </div>
+          </div>
+
+          <div class="modal-footer flex-column">
+            <button type="submit" class="btn btn-primary btn-block" id="submit-login-btn">
+              Log In
+            </button>
+            <p class="auth-switch-text mt-2">
+              Don't have an account? <button type="button" class="btn-text-link" id="switch-to-signup-btn">Sign Up</button>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Student Signup Modal -->
+  <div class="modal-backdrop" id="signup-modal" role="dialog" aria-modal="true" aria-labelledby="signup-dialog-title" style="display: none;">
+    <div class="modal-dialog modal-dialog-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h3 class="modal-title" id="signup-dialog-title">Student Registration</h3>
+            <p class="modal-subtitle">Join the verified campus exchange community.</p>
+          </div>
+          <button type="button" class="modal-close-btn" id="close-signup-modal-btn" aria-label="Close modal">&times;</button>
+        </div>
+
+        <form id="signup-form" novalidate>
+          <div class="modal-body">
+            <!-- Error alert box -->
+            <div class="auth-alert-box error" id="signup-error-alert" style="display: none;"></div>
+
+            <div class="form-group">
+              <label for="signup-name" class="form-label">Full Name <span class="required">*</span></label>
+              <input 
+                type="text" 
+                id="signup-name" 
+                class="form-control" 
+                placeholder="e.g. Aarav Sharma" 
+                required
+              >
+              <div class="field-error" id="error-signup-name">Please enter your full name (at least 2 characters).</div>
+            </div>
+
+            <div class="form-group">
+              <label for="signup-email" class="form-label">College Email <span class="required">*</span></label>
+              <input 
+                type="email" 
+                id="signup-email" 
+                class="form-control" 
+                placeholder="e.g. aarav.s@campus.edu" 
+                autocomplete="email"
+                required
+              >
+              <div class="field-error" id="error-signup-email">Please enter a valid college email address.</div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-half">
+                <label for="signup-dept" class="form-label">Department & Year</label>
+                <input 
+                  type="text" 
+                  id="signup-dept" 
+                  class="form-control" 
+                  placeholder="e.g. CS 2nd Year"
+                >
+              </div>
+              <div class="form-group col-half">
+                <label for="signup-contact" class="form-label">Phone / WhatsApp</label>
+                <input 
+                  type="text" 
+                  id="signup-contact" 
+                  class="form-control" 
+                  placeholder="e.g. 98765 43210"
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="signup-location" class="form-label">Hostel / Campus Pickup Zone</label>
+              <input 
+                type="text" 
+                id="signup-location" 
+                class="form-control" 
+                placeholder="e.g. Hostels Block B / Library Quad"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="signup-password" class="form-label">Password (min 6 characters) <span class="required">*</span></label>
+              <div class="password-input-wrap">
+                <input 
+                  type="password" 
+                  id="signup-password" 
+                  class="form-control input-has-toggle" 
+                  placeholder="At least 6 characters" 
+                  autocomplete="new-password"
+                  minlength="6"
+                  required
+                >
+                <button type="button" class="btn-password-toggle" id="toggle-signup-password" aria-label="Toggle password visibility">
+                  👁️
+                </button>
+              </div>
+              <div class="field-error" id="error-signup-password">Password must be at least 6 characters long.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="signup-confirm-password" class="form-label">Confirm Password <span class="required">*</span></label>
+              <input 
+                type="password" 
+                id="signup-confirm-password" 
+                class="form-control" 
+                placeholder="Confirm password" 
+                autocomplete="new-password"
+                required
+              >
+              <div class="field-error" id="error-signup-confirm">Passwords do not match.</div>
+            </div>
+
+            <!-- Learning Prototype Security Disclaimer -->
+            <div class="auth-prototype-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="auth-note-icon">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span>Prototype note: Client-side prototype with SHA-256 hashing. Do not enter real banking passwords.</span>
+            </div>
+          </div>
+
+          <div class="modal-footer flex-column">
+            <button type="submit" class="btn btn-primary btn-block" id="submit-signup-btn">
+              Create Student Account
+            </button>
+            <p class="auth-switch-text mt-2">
+              Already have an account? <button type="button" class="btn-text-link" id="switch-to-login-btn">Log In</button>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="container footer-content">
+      <div class="footer-brand-col">
+        <a href="#" class="brand-logo footer-logo">
+          <div class="logo-icon-wrapper">
+            <svg class="logo-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+          </div>
+          <span class="brand-title">Uni<span class="gradient-text">Trade</span></span>
+        </a>
+        <p class="footer-tagline">
+          The modern campus marketplace empowering college students to buy and sell second-hand textbooks, electronics, notes, and essentials safely and affordably.
+        </p>
+      </div>
+
+      <div class="footer-links-col">
+        <h4 class="footer-col-title">Quick Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="#" id="footer-link-explore">Explore All Listings</a></li>
+          <li><a href="#" id="footer-link-sell">Post an Item</a></li>
+          <li><a href="#" id="footer-link-mylistings">My Listings Dashboard</a></li>
+          <li><a href="#how-it-works">Campus Safety Guidelines</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h4 class="footer-col-title">Popular Categories</h4>
+        <ul class="footer-links">
+          <li><button type="button" class="footer-cat-link" data-category="Textbooks">Textbooks</button></li>
+          <li><button type="button" class="footer-cat-link" data-category="Calculators">Graphing Calculators</button></li>
+          <li><button type="button" class="footer-cat-link" data-category="Electronics">Electronics & Tech</button></li>
+          <li><button type="button" class="footer-cat-link" data-category="Notes & Study">Lecture Notes</button></li>
+          <li><button type="button" class="footer-cat-link" data-category="Dorm Essentials">Dorm Essentials</button></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>&copy; 2026 UniTrade Campus Marketplace. Built for student communities.</p>
+        <div class="footer-badges">
+          <span class="badge-mini">100% Free for Students</span>
+          <span class="badge-mini">Zero Fees</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script src="js/app.js"></script>
+</body>
+</html>
